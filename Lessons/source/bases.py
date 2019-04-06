@@ -22,9 +22,9 @@ def decode(digits, base):
     n = len(digits)
 
     for digit in digits:
-        n -= 1
-        multiplier = base ** n
-        result += compare.index(digit) * multiplier
+        n -= 1 # n represent the exponent which is the len position - 1
+        multiplier = base ** n # the base to the power of n
+        result += compare.index(digit) * multiplier # we add and assign the digit value and then multiply by the base to the power of n
     return result
 
 
