@@ -5,6 +5,17 @@ def contains(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
+    if pattern == '':
+        return True
+    for index in range(len(text) - len(pattern) + 1):
+        if text[index] == pattern[0]:
+            is_found = True
+            for i in range(1, len(pattern)):
+                if text[index + i] != pattern[i]:
+                    is_found = False
+            if is_found:
+                return True
+    return False
 
 
 def find_index(text, pattern):
@@ -13,6 +24,18 @@ def find_index(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_index here (iteratively and/or recursively)
+    if pattern == '':
+        return 0
+    for index in range(len(text) - len(pattern) + 1):
+        if text[index] == pattern[0]:
+            is_found = True
+            for i in range(1, len(pattern)):
+                if text[index + i] != pattern[i]:
+                    is_found = False
+            if is_found:
+                return index
+    return None
+
 
 
 def find_all_indexes(text, pattern):
@@ -21,6 +44,21 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    index_list = []
+    if pattern == '':
+        for i in range(len(text)):
+            index_list.append(i)
+        return index_list
+
+    for index in range(len(text) - len(pattern) + 1):
+        if text[index] == pattern[0]:
+            is_found = True
+            for i in range(1, len(pattern)):
+                if text[index + i] != pattern[i]:
+                    is_found = False
+            if is_found:
+                index_list.append(index)
+    return index_list
 
 
 def test_string_algorithms(text, pattern):
