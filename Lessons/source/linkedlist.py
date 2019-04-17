@@ -6,6 +6,7 @@ class Node(object):
         """Initialize this node with the given data."""
         self.data = data
         self.next = None
+        self.previous = None
 
     def __repr__(self):
         """Return a string representation of this node."""
@@ -79,6 +80,20 @@ class LinkedList(object):
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return its data
+        if index == 0:
+            return self.head.data
+        if index == (self.size - 1):
+            return self.tail.data
+        
+        node_count = index
+        node = self.head
+
+        while node_count > 0:
+            node = node.next
+            data = node.data
+            node_count -= 1
+        return data
+
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -89,21 +104,48 @@ class LinkedList(object):
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node before the given index and insert item after it
-        if index == 0:
-            self.prepend(item)
-        elif index == self.size:
-            self.append(item)
-        
-        else: # 0 < index < size
-            previous_node = self.head
-            
-            for _ in range(index - 1):
-                previous_node = previous_node.next
+        # New node initialized
+        new_node = Node(item)
 
-            new_node = Node(item)
-            new_node.next = previous_node.next
-            previous_node.next = new_node
-            self.size += 1
+        # Avoiding transversal if item is easily accessible
+        if index == 0:
+            # new_node.next = self.head
+            # self.head = new_node
+            return self.prepend(item)
+
+        if index == self.size:
+            # self.tail.next = new_node
+            # new_node.previous = self.tail
+            # self.tail = new_node
+            return self.append(item)
+        
+    
+        # Node counter initialized to index - 1
+        node_count = index - 1
+        # Start at the head node
+        old_node = self.head
+        next_node = None
+        # Loops until the node is at target index
+        while node_count > 0:
+            # Skip to the next node
+            old_node = old_node.next
+            next_node = old_node.next
+            # Count down
+            node_count -= 1
+        
+        # Set new node's next to next node
+        new_node.next = next_node
+        # Set next node's previous to new node
+        next_node.previous = new_node
+        # Set new node's previous to old node
+        new_node.previous = old_node
+        # Lastly, set old node's next to new node
+        old_node.next = new_node
+        # Add to size
+        self.size += 1
+
+        # Node has been inserted to linked list!
+        return
 
 
     def append(self, item):
@@ -118,8 +160,10 @@ class LinkedList(object):
         else:
             # Otherwise insert new node after tail
             self.tail.next = new_node
+            new_node.previous = self.tail
         # Update tail to new node regardless
         self.tail = new_node
+        self.size += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -133,8 +177,10 @@ class LinkedList(object):
         else:
             # Otherwise insert new node before head
             new_node.next = self.head
+            self.head.previous = new_node
         # Update head to new node regardless
         self.head = new_node
+        self.size += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -199,18 +245,21 @@ class LinkedList(object):
                 previous.next = node.next
                 # Unlink the found node from its next node
                 node.next = None
+                self.size -= 1
             # Check if we found a node at the head
             if node is self.head:
                 # Update head to the next node
                 self.head = node.next
                 # Unlink the found node from the next node
                 node.next = None
+                self.size -= 1
             # Check if we found a node at the tail
             if node is self.tail:
                 # Check if there is a node before the found node
                 if previous is not None:
                     # Unlink the previous node from the found node
                     previous.next = None
+                    self.size -= 1
                 # Update tail to the previous node regardless
                 self.tail = previous
         else:
