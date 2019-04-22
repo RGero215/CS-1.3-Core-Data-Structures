@@ -31,7 +31,7 @@ class LinkedStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – adding to the head of the list and there's no need to trarverse the linkedlist"""
         #  Push given item
         return self.list.prepend(item)
 
@@ -46,7 +46,7 @@ class LinkedStack(object):
     def pop(self):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – retriving the firs item of the linkedlist"""
         # Remove and return top item, if any
         if self.list.is_empty():
             raise ValueError('Stack is empty')
