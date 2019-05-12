@@ -1,49 +1,52 @@
 #!python
 
 def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """Return a boolean indicating whether pattern occurs in text.
+    O(n) is worst case where no pattern is found as it must parse the text
+    O(m) is best case where pattern is found where m is length of pattern"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement contains here (iteratively and/or recursively)
-    if pattern == '':
-        return True
-    for index in range(len(text) - len(pattern) + 1):
-        if text[index] == pattern[0]:
-            is_found = True
-            for i in range(1, len(pattern)):
-                if text[index + i] != pattern[i]:
-                    is_found = False
-            if is_found:
-                return True
-    return False
+    # Implement contains here (iteratively and/or recursively)
+    index = find_index(text, pattern) # finds the index
+
+    if(index == None): # if is none return false
+        return False
+    return True # else true
 
 
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
-    or None if not found."""
+    or None if not found.
+    O(n + m) run time is worst case scenario where n is length of
+    text and m is length of pattern, and the pattern appears
+    O(n) is best case where no pattern is found as it must parse the text"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_index here (iteratively and/or recursively)
-    if pattern == '':
+    # Implement find_index here (iteratively and/or recursively)
+    if pattern == '': # return 0 if the pattern is empty
         return 0
-    for index in range(len(text) - len(pattern) + 1):
-        if text[index] == pattern[0]:
-            is_found = True
+    for index in range(len(text) - len(pattern) + 1): # loop through each char
+        if text[index] == pattern[0]: # if the pattern start at index 0 found is true
+            is_found = True 
             for i in range(1, len(pattern)):
                 if text[index + i] != pattern[i]:
-                    is_found = False
+                    is_found = False 
             if is_found:
-                return index
+                return index # if found return the index
     return None
 
 
 
 def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
-    or an empty list if not found."""
+    or an empty list if not found.
+    O(n * m) run time is worst case scenario where n is length of
+    text and m is length of pattern, and the pattern appears as many times as
+    possible in text
+    O(n) is best case where no pattern is found as it must parse the text"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    # Implement find_all_indexes here (iteratively and/or recursively)
     index_list = []
     if pattern == '':
         for i in range(len(text)):

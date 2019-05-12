@@ -113,9 +113,12 @@ class StringsTest(unittest.TestCase):
         assert find_all_indexes('abcabcdabcde', 'abcd') == [3, 7]  # multiple occurrences, overlapping prefix
         assert find_all_indexes('abra cadabra', 'abra') == [0, 8]  # multiple occurrences
         assert find_all_indexes('abra cadabra', 'adab') == [6]  # overlapping prefix
-        # TODO: Write more test cases that check complex patterns or edge cases
+        #  Write more test cases that check complex patterns or edge cases
         # You'll need a lot more than this to test your algorithm's robustness
-        # ...
+        assert find_all_indexes('Lorem Ipsum is simply dummy text of the printing', 'dummy') == [22]
+        assert find_all_indexes('Lorem Ipsum is simply dummy text of the printing', 'um') == [9, 23]
+        assert find_all_indexes('Lorem Ipsum is simply dummy text of the printing', 'm') == [4, 10,17,24,25]
+        assert find_all_indexes('Lorem Ipsum is simply dummy text of the printing ', 'p') == [7, 18, 40]
 
 
 if __name__ == '__main__':

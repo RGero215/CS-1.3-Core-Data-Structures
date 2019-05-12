@@ -19,6 +19,13 @@ class HashTable(object):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
 
+    def __iter__(self):
+        """Define how we iterate over a hashtable"""
+        for bucket in self.buckets:
+            if not bucket.is_empty():
+                for item in bucket:
+                    yield item
+
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         return hash(key) % len(self.buckets)
@@ -60,14 +67,8 @@ class HashTable(object):
 
     def length(self):
         """Return the number of key-value entries by traversing its buckets.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
-        # Count number of key-value entries in each of the buckets
-        item_count = 0
-        for bucket in self.buckets:
-            item_count += bucket.length()
-        return item_count
-        # Equivalent to this list comprehension:
-        return sum(bucket.length() for bucket in self.buckets)
+        Best and worst case running time: O(1)"""
+        return self.size
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
@@ -132,6 +133,7 @@ class HashTable(object):
         if entry is not None:  # Found
             # Remove the key-value entry from the bucket
             bucket.delete(entry)
+            self.size -= 1
         else:  # Not found
             raise KeyError('Key not found: {}'.format(key))
 
@@ -148,7 +150,7 @@ class HashTable(object):
         elif new_size is 0:
             new_size = len(self.buckets) / 2  # Half size
         # Get a list to temporarily hold all current key-value entries
-        current_entries =self.items() # O(n) runtime
+        current_entries = self.items() # O(n) runtime
         # Create a new list of new_size total empty linked list buckets
         # self.buckets = [LinkedList() for i in range(new_size)]
         # resize back to 0

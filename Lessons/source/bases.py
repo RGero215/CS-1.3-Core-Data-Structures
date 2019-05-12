@@ -45,17 +45,22 @@ def encode(number, base):
         return '0'
 
     while number is not 0:
+        # set the remainder seperatly 
         remainder = number % base
+        # Divides the number with the base and ignores the remainder
         quotient = number // base
         
         if remainder > 9:
+            # Sets the remainder to the index of the list
             remainder = compare[remainder]
+            # Add to string
             result += str(remainder)
+            # Determines to keep looping
             number = quotient
         else:
             result += str(remainder)
             number = quotient
-    return result[::-1]
+    return result[::-1] # Reverse the string
 
 
 def convert(digits, base1, base2):

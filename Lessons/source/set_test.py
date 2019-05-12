@@ -48,19 +48,22 @@ class SetTest(unittest.TestCase):
         test_set = Set(['A','B','C','D','E'])
         other_set = Set(['C','D','E','F','G'])
         unions = test_set.union(other_set)
-        self.assertCountEqual(unions, ['A', 'B', 'C', 'D', 'E', 'F', 'G'])
+        union_items = unions.get_items()
+        self.assertCountEqual(union_items, ['A', 'B', 'C', 'D', 'E', 'F', 'G'])
 
     def test_intersection(self):
         test_set = Set(['A','B','C','D','E'])
         other_set = Set(['C','D','E','F','G'])
         intersection = test_set.intersection(other_set)
-        self.assertCountEqual(intersection, ['C', 'D', 'E'])
+        intersection_items = intersection.get_items()
+        self.assertCountEqual(intersection_items, ['C', 'D', 'E'])
 
     def test_difference(self):
         test_set = Set(['A','B','C','D','E'])
         other_set = Set(['C','D','E','F','G'])
         difference = test_set.difference(other_set)
-        self.assertCountEqual(difference, ['A','B'])
+        difference_items = difference.get_items()
+        self.assertCountEqual(difference_items, ['A','B'])
 
     def test_is_subset(self):
         test_set = Set(['A','B','C','D','E'])
