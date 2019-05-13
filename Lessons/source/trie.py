@@ -117,10 +117,11 @@ class Trie:
                     current = current.children[ascii_index]
                 else:
                     
-                    if isinstance(current.data, tuple):
+                    if isinstance(current.data, tuple) and current.data[0] in numbers_file:
                         # Not leaf but contain prefixd
                         # print(current.data)
                         # print(current.data)
+                        print("STD: ", current.data)
                         return current.data
                     else:
                         # Number is not present
@@ -128,7 +129,7 @@ class Trie:
             index += 1
             # if we consider all numbers and the node is a leaf we found the number
             if current.leaf:
-                print('Number {} cost {}'.format(numbers_file, current.data))
+                print('Number {} cost {}'.format(numbers_file[0], current.data[1]))
                 return True
             # number is not present in the tree
             return False
@@ -141,8 +142,8 @@ if __name__ == "__main__":
     
     trie = Trie()
     trie.insert_file(prefix_cost_dict('route-costs-100.txt'))
-    trie.insert('18017461621', '0.03')
-    print(trie.search('12138881907'))
-    print(trie.search('18017461621'))
+    # trie.insert('12138881907', '0.05')
+    # print(trie.search('12138881907'))
+    # print(trie.search('1888417'))
     print(trie.search_file(number_list('phone-numbers-1000.txt')))
 
