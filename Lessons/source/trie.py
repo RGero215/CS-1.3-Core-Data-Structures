@@ -1,4 +1,5 @@
 from numbers_prefix_cost import *
+import timeit
 
 CHILDREN_SIZE = 10
 
@@ -55,7 +56,7 @@ class Trie:
                 # Keep going
                 current = current.children[ascii_index]
             else:
-                if isinstance(current.data, tuple):
+                if isinstance(current.data, tuple) and current.data[0] in numbers:
                     # Not leaf but contain prefixd
                     # print(current.data)
                     print("Data: ", current.data)
@@ -64,7 +65,7 @@ class Trie:
                     # Number is not present
                     return False
         # if we consider all numbers and the node is a leaf we found the number
-        if current.leaf:
+        if current.leaf and current.data[0] in numbers:
             print("Current Data:", current.data)
             return True
         # number is not present in the tree
@@ -117,19 +118,19 @@ class Trie:
                     current = current.children[ascii_index]
                 else:
                     
-                    if isinstance(current.data, tuple) and current.data[0] in numbers_file:
+                    if isinstance(current.data, tuple) and current.data[0] in numbers_file[index]:
                         # Not leaf but contain prefixd
                         # print(current.data)
                         # print(current.data)
-                        print("STD: ", current.data)
+                        print("Current Data: ", current.data)
                         return current.data
                     else:
                         # Number is not present
                         continue
             index += 1
             # if we consider all numbers and the node is a leaf we found the number
-            if current.leaf:
-                print('Number {} cost {}'.format(numbers_file[0], current.data[1]))
+            if current.leaf and current.data[0] in numbers_file:
+                print("Current Data:", current.data)
                 return True
             # number is not present in the tree
             return False
@@ -142,8 +143,9 @@ if __name__ == "__main__":
     
     trie = Trie()
     trie.insert_file(prefix_cost_dict('route-costs-100.txt'))
-    # trie.insert('12138881907', '0.05')
+    # trie.insert('1213', '0.05')
     # print(trie.search('12138881907'))
     # print(trie.search('1888417'))
-    print(trie.search_file(number_list('phone-numbers-1000.txt')))
+    # print(trie.search_file(number_list('phone-numbers-1000.txt')))
+    print(timeit.timeit("trie.search_file(number_list('phone-numbers-1000.txt'))", globals=globals(), number=1))
 
