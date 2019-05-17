@@ -35,7 +35,7 @@ def prefix_cost_dict(file_name):
 
 if __name__ == "__main__":
     # print(number_list('phone-numbers-1000.txt'))
-    print(prefix_cost_dict('route-costs-10000000.txt'))
+    print(prefix_cost_dict('route-costs-35000.txt'))
     # print(ord('0'))
     # print(ord('1'))
     # print(ord('2'))

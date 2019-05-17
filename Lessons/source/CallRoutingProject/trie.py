@@ -101,10 +101,9 @@ if __name__ == "__main__":
     # print(trie.search('12138881907'))
     # print(trie.search('34781380'))
     # print(trie.search_file(number_list('phone-numbers-10000.txt')))
-    print(timeit.timeit("trie.search_file(number_list('route-costs-10000000.txt'))", globals=globals(), number=1))
+    print(timeit.timeit("trie.search_file(number_list('route-costs-35000.txt'))", globals=globals(), number=1))
     usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     usage=round(usage/float(1<<20),2)
 
 # print memory usage
     print("Memory Usage: {} mb.".format(usage))
-
